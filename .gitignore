@@ -16,3 +16,8 @@ tinyxml/*
 #WTL ignore + exceptions
 WTL/*
 !WTL/README
+*.vsidx
+*.db
+*.db-shm
+*.opendb
+*.db-wal
