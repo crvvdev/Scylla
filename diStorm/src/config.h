@@ -4,20 +4,8 @@ config.h
 diStorm3 - Powerful disassembler for X86/AMD64
 http://ragestorm.net/distorm/
 distorm at gmail dot com
-Copyright (C) 2003-2012 Gil Dabah
-
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>
+Copyright (C) 2003-2021 Gil Dabah
+This library is licensed under the BSD license. See the file COPYING.
 */
 
 
@@ -25,7 +13,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>
 #define CONFIG_H
 
 /* diStorm version number. */
-#define __DISTORMV__ 0x030300
+#define __DISTORMV__ 0x030502
 
 #include <string.h> /* memset, memcpy - can be easily self implemented for libc independency. */
 
@@ -69,6 +57,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>
 
 #define _DLLEXPORT_
 #define _FASTCALL_
+/* Keep inline as static (arrrrg) as it would break linux on some flavors otherwise. */
 #define _INLINE_ static
 /* GCC ignores this directive... */
 /*#define _FASTCALL_ __attribute__((__fastcall__))*/
@@ -106,7 +95,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>
 
 #define _DLLEXPORT_
 #define _FASTCALL_
-#define _INLINE_
+#define _INLINE_ static
 
 /* End of __TINYC__ */
 
@@ -140,34 +129,45 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>
 
 /* Define stream read functions for big endian systems. */
 #ifdef BE_SYSTEM
+
+/* Avoid defining 'static static' for GCC. */
+#ifndef __GNUC__
+#define STATIC_INLINE static _INLINE_
+#else
+#define STATIC_INLINE static
+#endif
+
 /*
- * These functions can read from the stream safely!
+ * Assumption: These functions can read from the stream safely!
  * Swap endianity of input to little endian.
  */
-static _INLINE_ int16_t RSHORT(const uint8_t *s)
+STATIC_INLINE int16_t RSHORT(const uint8_t *s)
 {
 	return s[0] | (s[1] << 8);
 }
-static _INLINE_ uint16_t RUSHORT(const uint8_t *s)
+STATIC_INLINE uint16_t RUSHORT(const uint8_t *s)
 {
 	return s[0] | (s[1] << 8);
 }
-static _INLINE_ int32_t RLONG(const uint8_t *s)
+STATIC_INLINE int32_t RLONG(const uint8_t *s)
 {
 	return s[0] | (s[1] << 8) | (s[2] << 16) | (s[3] << 24);
 }
-static _INLINE_ uint32_t RULONG(const uint8_t *s)
+STATIC_INLINE uint32_t RULONG(const uint8_t *s)
 {
 	return s[0] | (s[1] << 8) | (s[2] << 16) | (s[3] << 24);
 }
-static _INLINE_ int64_t RLLONG(const uint8_t *s)
+STATIC_INLINE int64_t RLLONG(const uint8_t *s)
 {
 	return s[0] | (s[1] << 8) | (s[2] << 16) | (s[3] << 24) | ((uint64_t)s[4] << 32) | ((uint64_t)s[5] << 40) | ((uint64_t)s[6] << 48) | ((uint64_t)s[7] << 56);
 }
-static _INLINE_ uint64_t RULLONG(const uint8_t *s)
+STATIC_INLINE uint64_t RULLONG(const uint8_t *s)
 {
 	return s[0] | (s[1] << 8) | (s[2] << 16) | (s[3] << 24) | ((uint64_t)s[4] << 32) | ((uint64_t)s[5] << 40) | ((uint64_t)s[6] << 48) | ((uint64_t)s[7] << 56);
 }
+
+#undef STATIC_INLINE
+
 #else
 /* Little endian macro's will just make the cast. */
 #define RSHORT(x) *(int16_t *)x

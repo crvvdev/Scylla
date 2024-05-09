@@ -73,7 +73,7 @@ ImportsHandling::~ImportsHandling()
 	TreeIcons.Destroy();
 }
 
-bool ImportsHandling::isModule(CTreeItem item) 
+bool ImportsHandling::isModule(CTreeItem item)
 {
 	return (0 != getModuleThunk(item));
 }
@@ -83,14 +83,14 @@ bool ImportsHandling::isImport(CTreeItem item)
 	return (0 != getImportThunk(item));
 }
 
-ImportModuleThunk * ImportsHandling::getModuleThunk(CTreeItem item)
+ImportModuleThunk* ImportsHandling::getModuleThunk(CTreeItem item)
 {
-	stdext::hash_map<HTREEITEM, TreeItemData>::const_iterator it;
+	std::unordered_map<HTREEITEM, TreeItemData>::const_iterator it;
 	it = itemData.find(item);
-	if(it != itemData.end())
+	if (it != itemData.end())
 	{
-		const TreeItemData * data = &it->second;
-		if(data->isModule)
+		const TreeItemData* data = &it->second;
+		if (data->isModule)
 		{
 			return data->module;
 		}
@@ -98,27 +98,27 @@ ImportModuleThunk * ImportsHandling::getModuleThunk(CTreeItem item)
 	return NULL;
 }
 
-ImportThunk * ImportsHandling::getImportThunk(CTreeItem item)
+ImportThunk* ImportsHandling::getImportThunk(CTreeItem item)
 {
-	stdext::hash_map<HTREEITEM, TreeItemData>::const_iterator it;
-	TreeItemData * data = getItemData(item);
-	if(data && !data->isModule)
+	std::unordered_map<HTREEITEM, TreeItemData>::const_iterator it;
+	TreeItemData* data = getItemData(item);
+	if (data && !data->isModule)
 	{
 		return data->import;
 	}
 	return NULL;
 }
 
-void ImportsHandling::setItemData(CTreeItem item, const TreeItemData * data)
+void ImportsHandling::setItemData(CTreeItem item, const TreeItemData* data)
 {
 	itemData[item] = *data;
 }
 
-ImportsHandling::TreeItemData * ImportsHandling::getItemData(CTreeItem item)
+ImportsHandling::TreeItemData* ImportsHandling::getItemData(CTreeItem item)
 {
-	stdext::hash_map<HTREEITEM, TreeItemData>::iterator it;
+	std::unordered_map<HTREEITEM, TreeItemData>::iterator it;
 	it = itemData.find(item);
-	if(it != itemData.end())
+	if (it != itemData.end())
 	{
 		return &it->second;
 	}
@@ -135,17 +135,17 @@ void ImportsHandling::updateCounts()
 	it_module = moduleList.begin();
 	while (it_module != moduleList.end())
 	{
-		ImportModuleThunk &moduleThunk = it_module->second;
+		ImportModuleThunk& moduleThunk = it_module->second;
 
 		it_import = moduleThunk.thunkList.begin();
 		while (it_import != moduleThunk.thunkList.end())
 		{
-			ImportThunk &importThunk = it_import->second;
+			ImportThunk& importThunk = it_import->second;
 
 			m_thunkCount++;
-			if(!importThunk.valid)
+			if (!importThunk.valid)
 				m_invalidThunkCount++;
-			else if(importThunk.suspect)
+			else if (importThunk.suspect)
 				m_suspectThunkCount++;
 
 			it_import++;
@@ -238,7 +238,7 @@ void ImportsHandling::displayAllImports()
 	it_module = moduleList.begin();
 	while (it_module != moduleList.end())
 	{
-		ImportModuleThunk &moduleThunk = it_module->second;
+		ImportModuleThunk& moduleThunk = it_module->second;
 
 		moduleThunk.key = moduleThunk.firstThunk; // This belongs elsewhere...
 		moduleThunk.hTreeItem = addDllToTreeView(TreeImports, &moduleThunk);
@@ -246,7 +246,7 @@ void ImportsHandling::displayAllImports()
 		it_import = moduleThunk.thunkList.begin();
 		while (it_import != moduleThunk.thunkList.end())
 		{
-			ImportThunk &importThunk = it_import->second;
+			ImportThunk& importThunk = it_import->second;
 
 			importThunk.key = importThunk.rva; // This belongs elsewhere...
 			importThunk.hTreeItem = addApiToTreeView(TreeImports, moduleThunk.hTreeItem, &importThunk);
@@ -268,7 +268,7 @@ void ImportsHandling::clearAllImports()
 	updateCounts();
 }
 
-CTreeItem ImportsHandling::addDllToTreeView(CMultiSelectTreeViewCtrl& idTreeView, ImportModuleThunk * moduleThunk)
+CTreeItem ImportsHandling::addDllToTreeView(CMultiSelectTreeViewCtrl& idTreeView, ImportModuleThunk* moduleThunk)
 {
 	CTreeItem item = idTreeView.InsertItem(L"", NULL, TVI_ROOT);
 
@@ -284,7 +284,7 @@ CTreeItem ImportsHandling::addDllToTreeView(CMultiSelectTreeViewCtrl& idTreeView
 	return item;
 }
 
-CTreeItem ImportsHandling::addApiToTreeView(CMultiSelectTreeViewCtrl& idTreeView, CTreeItem parentDll, ImportThunk * importThunk)
+CTreeItem ImportsHandling::addApiToTreeView(CMultiSelectTreeViewCtrl& idTreeView, CTreeItem parentDll, ImportThunk* importThunk)
 {
 	CTreeItem item = idTreeView.InsertItem(L"", parentDll, TVI_LAST);
 
@@ -310,12 +310,12 @@ void ImportsHandling::selectImports(bool invalid, bool suspect)
 	it_module = moduleList.begin();
 	while (it_module != moduleList.end())
 	{
-		ImportModuleThunk &moduleThunk = it_module->second;
+		ImportModuleThunk& moduleThunk = it_module->second;
 
 		it_import = moduleThunk.thunkList.begin();
 		while (it_import != moduleThunk.thunkList.end())
 		{
-			ImportThunk &importThunk = it_import->second;
+			ImportThunk& importThunk = it_import->second;
 
 			if ((invalid && !importThunk.valid) || (suspect && importThunk.suspect))
 			{
@@ -333,15 +333,15 @@ void ImportsHandling::selectImports(bool invalid, bool suspect)
 bool ImportsHandling::invalidateImport(CTreeItem item)
 {
 	ImportThunk * import = getImportThunk(item);
-	if(import)
+	if (import)
 	{
 		CTreeItem parent = item.GetParent();
-		if(!parent.IsNull())
+		if (!parent.IsNull())
 		{
-			const ImportModuleThunk * module = getModuleThunk(parent);
-			if(module)
+			const ImportModuleThunk* module = getModuleThunk(parent);
+			if (module)
 			{
-				import->invalidate();
+import->invalidate();
 
 				updateImportInTreeView(import, import->hTreeItem);
 				updateModuleInTreeView(module, module->hTreeItem);
@@ -356,16 +356,16 @@ bool ImportsHandling::invalidateImport(CTreeItem item)
 
 bool ImportsHandling::invalidateModule(CTreeItem item)
 {
-	ImportModuleThunk * module = getModuleThunk(item);
-	if(module)
+	ImportModuleThunk* module = getModuleThunk(item);
+	if (module)
 	{
 		std::map<DWORD_PTR, ImportThunk>::iterator it_import;
 
 		it_import = module->thunkList.begin();
-		while(it_import != module->thunkList.end())
+		while (it_import != module->thunkList.end())
 		{
 			ImportThunk * import = &it_import->second;
-			import->invalidate();
+import->invalidate();
 			updateImportInTreeView(import, import->hTreeItem);
 			it_import++;
 		}
@@ -378,25 +378,25 @@ bool ImportsHandling::invalidateModule(CTreeItem item)
 	return false;
 }
 
-bool ImportsHandling::setImport(CTreeItem item, const WCHAR * moduleName, const CHAR * apiName, WORD ordinal, WORD hint, bool valid, bool suspect)
+bool ImportsHandling::setImport(CTreeItem item, const WCHAR* moduleName, const CHAR* apiName, WORD ordinal, WORD hint, bool valid, bool suspect)
 {
 	ImportThunk * import = getImportThunk(item);
-	if(import)
+	if (import)
 	{
 		CTreeItem parent = item.GetParent();
-		if(!parent.IsNull())
+		if (!parent.IsNull())
 		{
-			ImportModuleThunk * module = getModuleThunk(parent);
-			if(module)
+			ImportModuleThunk* module = getModuleThunk(parent);
+			if (module)
 			{
 
 				wcscpy_s(import->moduleName, moduleName);
 				strcpy_s(import->name, apiName);
-				import->ordinal = ordinal;
+import->ordinal = ordinal;
 				//import->apiAddressVA = api->va; //??
-				import->hint = hint;
-				import->valid = valid;
-				import->suspect = suspect;
+import->hint = hint;
+import->valid = valid;
+import->suspect = suspect;
 
 				if (module->isValid())
 				{
@@ -415,7 +415,7 @@ bool ImportsHandling::setImport(CTreeItem item, const WCHAR * moduleName, const 
 	return false;
 }
 
-void ImportsHandling::updateImportInTreeView(const ImportThunk * importThunk, CTreeItem item)
+void ImportsHandling::updateImportInTreeView(const ImportThunk* importThunk, CTreeItem item)
 {
 	if (importThunk->valid)
 	{
@@ -442,20 +442,20 @@ void ImportsHandling::updateImportInTreeView(const ImportThunk * importThunk, CT
 	item.SetImage(icon, icon);
 }
 
-void ImportsHandling::updateModuleInTreeView(const ImportModuleThunk * importThunk, CTreeItem item)
+void ImportsHandling::updateModuleInTreeView(const ImportModuleThunk* importThunk, CTreeItem item)
 {
-	swprintf_s(stringBuffer, L"%s (%d) FThunk: " PRINTF_DWORD_PTR_HALF, importThunk->moduleName,importThunk->thunkList.size(), importThunk->firstThunk);
+	swprintf_s(stringBuffer, L"%s (%d) FThunk: " PRINTF_DWORD_PTR_HALF, importThunk->moduleName, importThunk->thunkList.size(), importThunk->firstThunk);
 
 	item.SetText(stringBuffer);
 	Icon icon = getAppropiateIcon(importThunk->isValid());
 	item.SetImage(icon, icon);
 }
 
-ImportsHandling::Icon ImportsHandling::getAppropiateIcon(const ImportThunk * importThunk)
+ImportsHandling::Icon ImportsHandling::getAppropiateIcon(const ImportThunk* importThunk)
 {
-	if(importThunk->valid)
+	if (importThunk->valid)
 	{
-		if(importThunk->suspect)
+		if (importThunk->suspect)
 		{
 			return iconWarning;
 		}
@@ -472,7 +472,7 @@ ImportsHandling::Icon ImportsHandling::getAppropiateIcon(const ImportThunk * imp
 
 ImportsHandling::Icon ImportsHandling::getAppropiateIcon(bool valid)
 {
-	if(valid)
+	if (valid)
 	{
 		return iconCheck;
 	}
@@ -485,18 +485,18 @@ ImportsHandling::Icon ImportsHandling::getAppropiateIcon(bool valid)
 bool ImportsHandling::cutImport(CTreeItem item)
 {
 	ImportThunk * import = getImportThunk(item);
-	if(import)
+	if (import)
 	{
 		CTreeItem parent = item.GetParent();
-		if(!parent.IsNull())
+		if (!parent.IsNull())
 		{
-			ImportModuleThunk * module = getModuleThunk(parent);
-			if(module)
+			ImportModuleThunk* module = getModuleThunk(parent);
+			if (module)
 			{
 				itemData.erase(item);
-				import->hTreeItem.Delete();
+import->hTreeItem.Delete();
 				module->thunkList.erase(import->key);
-				import = 0;
+import = 0;
 
 				if (module->thunkList.empty())
 				{
@@ -527,11 +527,11 @@ bool ImportsHandling::cutImport(CTreeItem item)
 
 bool ImportsHandling::cutModule(CTreeItem item)
 {
-	ImportModuleThunk * module = getModuleThunk(item);
-	if(module)
+	ImportModuleThunk* module = getModuleThunk(item);
+	if (module)
 	{
 		CTreeItem child = item.GetChild();
-		while(!child.IsNull())
+		while (!child.IsNull())
 		{
 			itemData.erase(child);
 			child = child.GetNextSibling();
@@ -549,7 +549,7 @@ bool ImportsHandling::cutModule(CTreeItem item)
 DWORD_PTR ImportsHandling::getApiAddressByNode(CTreeItem item)
 {
 	const ImportThunk * import = getImportThunk(item);
-	if(import)
+	if (import)
 	{
 		return import->apiAddressVA;
 	}
@@ -558,36 +558,36 @@ DWORD_PTR ImportsHandling::getApiAddressByNode(CTreeItem item)
 
 void ImportsHandling::scanAndFixModuleList()
 {
-	WCHAR prevModuleName[MAX_PATH] = {0};
+	WCHAR prevModuleName[MAX_PATH] = { 0 };
 	std::map<DWORD_PTR, ImportModuleThunk>::iterator it_module;
 	std::map<DWORD_PTR, ImportThunk>::iterator it_import;
 
 	it_module = moduleList.begin();
 	while (it_module != moduleList.end())
 	{
-		ImportModuleThunk &moduleThunk = it_module->second;
+		ImportModuleThunk& moduleThunk = it_module->second;
 
 		it_import = moduleThunk.thunkList.begin();
 
-		ImportThunk * importThunkPrev;
+		ImportThunk* importThunkPrev;
 		importThunkPrev = &it_import->second;
 
 		while (it_import != moduleThunk.thunkList.end())
 		{
-			ImportThunk &importThunk = it_import->second;
+			ImportThunk& importThunk = it_import->second;
 
 			if (importThunk.moduleName[0] == 0 || importThunk.moduleName[0] == L'?')
 			{
 				addNotFoundApiToModuleList(&importThunk);
 			}
-			else 
+			else
 			{
-				
+
 				if (_wcsicmp(importThunk.moduleName, prevModuleName))
 				{
 					addModuleToModuleList(importThunk.moduleName, importThunk.rva);
 				}
-				
+
 				addFunctionToModuleList(&importThunk);
 			}
 
@@ -604,12 +604,12 @@ void ImportsHandling::scanAndFixModuleList()
 	moduleListNew.clear();
 }
 
-bool ImportsHandling::findNewModules(std::map<DWORD_PTR, ImportThunk> & thunkList)
+bool ImportsHandling::findNewModules(std::map<DWORD_PTR, ImportThunk>& thunkList)
 {
 	throw std::exception("The method or operation is not implemented.");
 }
 
-bool ImportsHandling::addModuleToModuleList(const WCHAR * moduleName, DWORD_PTR firstThunk)
+bool ImportsHandling::addModuleToModuleList(const WCHAR* moduleName, DWORD_PTR firstThunk)
 {
 	ImportModuleThunk module;
 
@@ -621,7 +621,7 @@ bool ImportsHandling::addModuleToModuleList(const WCHAR * moduleName, DWORD_PTR 
 	return true;
 }
 
-bool ImportsHandling::isNewModule(const WCHAR * moduleName)
+bool ImportsHandling::isNewModule(const WCHAR* moduleName)
 {
 	std::map<DWORD_PTR, ImportModuleThunk>::iterator it_module;
 
@@ -650,10 +650,10 @@ void ImportsHandling::addUnknownModuleToModuleList(DWORD_PTR firstThunk)
 	moduleListNew[module.key] = module;
 }
 
-bool ImportsHandling::addNotFoundApiToModuleList(const ImportThunk * apiNotFound)
+bool ImportsHandling::addNotFoundApiToModuleList(const ImportThunk* apiNotFound)
 {
 	ImportThunk import;
-	ImportModuleThunk  * module = 0;
+	ImportModuleThunk* module = 0;
 	std::map<DWORD_PTR, ImportModuleThunk>::iterator it_module;
 	DWORD_PTR rva = apiNotFound->rva;
 
@@ -713,25 +713,25 @@ bool ImportsHandling::addNotFoundApiToModuleList(const ImportThunk * apiNotFound
 	}
 
 
-	import.suspect = true;
-	import.valid = false;
-	import.va = apiNotFound->va;
-	import.rva = apiNotFound->rva;
-	import.apiAddressVA = apiNotFound->apiAddressVA;
-	import.ordinal = 0;
+import.suspect = true;
+import.valid = false;
+import.va = apiNotFound->va;
+import.rva = apiNotFound->rva;
+import.apiAddressVA = apiNotFound->apiAddressVA;
+import.ordinal = 0;
 
 	wcscpy_s(import.moduleName, L"?");
 	strcpy_s(import.name, "?");
 
-	import.key = import.rva;
+import.key = import.rva;
 	module->thunkList[import.key] = import;
 	return true;
 }
 
-bool ImportsHandling::addFunctionToModuleList(const ImportThunk * apiFound)
+bool ImportsHandling::addFunctionToModuleList(const ImportThunk* apiFound)
 {
 	ImportThunk import;
-	ImportModuleThunk  * module = 0;
+	ImportModuleThunk* module = 0;
 	std::map<DWORD_PTR, ImportModuleThunk>::iterator it_module;
 
 	if (moduleListNew.size() > 1)
@@ -779,18 +779,18 @@ bool ImportsHandling::addFunctionToModuleList(const ImportThunk * apiFound)
 	}
 
 
-	import.suspect = apiFound->suspect;
-	import.valid = apiFound->valid;
-	import.va = apiFound->va;
-	import.rva = apiFound->rva;
-	import.apiAddressVA = apiFound->apiAddressVA;
-	import.ordinal = apiFound->ordinal;
-	import.hint = apiFound->hint;
+import.suspect = apiFound->suspect;
+import.valid = apiFound->valid;
+import.va = apiFound->va;
+import.rva = apiFound->rva;
+import.apiAddressVA = apiFound->apiAddressVA;
+import.ordinal = apiFound->ordinal;
+import.hint = apiFound->hint;
 
 	wcscpy_s(import.moduleName, apiFound->moduleName);
 	strcpy_s(import.name, apiFound->name);
 
-	import.key = import.rva;
+import.key = import.rva;
 	module->thunkList[import.key] = import;
 	return true;
 }
@@ -812,7 +812,7 @@ void ImportsHandling::changeExpandStateOfTreeNodes(UINT flag)
 	it_module = moduleList.begin();
 	while (it_module != moduleList.end())
 	{
-		ImportModuleThunk &moduleThunk = it_module->second;
+		ImportModuleThunk& moduleThunk = it_module->second;
 
 		moduleThunk.hTreeItem.Expand(flag);
 

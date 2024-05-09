@@ -1,0 +1,10 @@
+A:/work/Scylla/tinyxml2/build/CMakeFiles/Experimental.dir
+A:/work/Scylla/tinyxml2/build/CMakeFiles/Nightly.dir
+A:/work/Scylla/tinyxml2/build/CMakeFiles/Continuous.dir
+A:/work/Scylla/tinyxml2/build/CMakeFiles/NightlyMemoryCheck.dir
+A:/work/Scylla/tinyxml2/build/CMakeFiles/tinyxml2.dir
+A:/work/Scylla/tinyxml2/build/CMakeFiles/xmltest.dir
+A:/work/Scylla/tinyxml2/build/CMakeFiles/RUN_TESTS.dir
+A:/work/Scylla/tinyxml2/build/CMakeFiles/INSTALL.dir
+A:/work/Scylla/tinyxml2/build/CMakeFiles/ALL_BUILD.dir
+A:/work/Scylla/tinyxml2/build/CMakeFiles/ZERO_CHECK.dir

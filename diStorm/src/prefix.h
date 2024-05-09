@@ -4,20 +4,8 @@ prefix.h
 diStorm3 - Powerful disassembler for X86/AMD64
 http://ragestorm.net/distorm/
 distorm at gmail dot com
-Copyright (C) 2003-2012 Gil Dabah
-
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>
+Copyright (C) 2003-2021 Gil Dabah
+This library is licensed under the BSD license. See the file COPYING.
 */
 
 
@@ -43,20 +31,19 @@ typedef enum {PFXIDX_NONE = -1, PFXIDX_REX, PFXIDX_LOREP, PFXIDX_SEG, PFXIDX_OP_
 */
 typedef struct {
 	_iflags decodedPrefixes, usedPrefixes;
-	const uint8_t *start, *last, *vexPos, *rexPos;
-	_PrefixExtType prefixExtType;
+	/* Number of prefixes scanned for current instruction, including VEX! */
+	unsigned int count;
 	uint16_t unusedPrefixesMask;
+	/* Holds the offset to the prefix byte by its type. */
+	uint16_t pfxIndexer[PFXIDX_MAX];
+	_PrefixExtType prefixExtType;
 	/* Indicates whether the operand size prefix (0x66) was used as a mandatory prefix. */
 	int isOpSizeMandatory;
 	/* If VEX prefix is used, store the VEX.vvvv field. */
 	unsigned int vexV;
 	/* The fields B/X/R/W/L of REX and VEX are stored together in this byte. */
 	unsigned int vrex;
-
-	/* !! Make sure pfxIndexer is LAST! Otherwise memset won't work well with it. !! */
-
-	/* Holds the offset to the prefix byte by its type. */
-	int pfxIndexer[PFXIDX_MAX];
+	const uint8_t* vexPos;
 } _PrefixState;
 
 /*
@@ -66,11 +53,27 @@ typedef struct {
 */
 #define MAX_PREFIXES (5)
 
-int prefixes_is_valid(unsigned int ch, _DecodeType dt);
-void prefixes_ignore(_PrefixState* ps, _PrefixIndexer pi);
+extern int PrefixTables[256 * 2];
+
+_INLINE_ int prefixes_is_valid(unsigned char ch, _DecodeType dt)
+{
+	/* The predicate selects (branchlessly) second half table for 64 bits otherwise selects first half. */
+	return PrefixTables[ch + ((dt >> 1) << 8)];
+}
+
+/* Ignore a specific prefix type. */
+_INLINE_ void prefixes_ignore(_PrefixState* ps, _PrefixIndexer pi)
+{
+	/*
+	 * If that type of prefix appeared already, set the bit of that *former* prefix.
+	 * Anyway, set the new index of that prefix type to the current index, so next time we know its position.
+	 */
+	ps->unusedPrefixesMask |= ps->pfxIndexer[pi];
+}
+
 void prefixes_ignore_all(_PrefixState* ps);
 uint16_t prefixes_set_unused_mask(_PrefixState* ps);
-void prefixes_decode(const uint8_t* code, int codeLen, _PrefixState* ps, _DecodeType dt);
+void prefixes_decode(_CodeInfo* ci, _PrefixState* ps);
 void prefixes_use_segment(_iflags defaultSeg, _PrefixState* ps, _DecodeType dt, _DInst* di);
 
 #endif /* PREFIX_H */

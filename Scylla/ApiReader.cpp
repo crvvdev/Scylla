@@ -7,8 +7,8 @@
 #include "StringConversion.h"
 #include "PeParser.h"
 
-stdext::hash_multimap<DWORD_PTR, ApiInfo *> ApiReader::apiList; //api look up table
-std::map<DWORD_PTR, ImportModuleThunk> *  ApiReader::moduleThunkList; //store found apis
+std::unordered_multimap<DWORD_PTR, ApiInfo*> ApiReader::apiList; //api look up table
+std::map<DWORD_PTR, ImportModuleThunk>* ApiReader::moduleThunkList; //store found apis
 
 DWORD_PTR ApiReader::minApiAddress = (DWORD_PTR)-1;
 DWORD_PTR ApiReader::maxApiAddress = 0;
@@ -17,16 +17,16 @@ DWORD_PTR ApiReader::maxApiAddress = 0;
 
 void ApiReader::readApisFromModuleList()
 {
-    if (Scylla::config[APIS_ALWAYS_FROM_DISK].isTrue())
-    {
-        readExportTableAlwaysFromDisk = true;
-    }
-    else
-    {
-        readExportTableAlwaysFromDisk = false;
-    }
+	if (Scylla::config[APIS_ALWAYS_FROM_DISK].isTrue())
+	{
+		readExportTableAlwaysFromDisk = true;
+	}
+	else
+	{
+		readExportTableAlwaysFromDisk = false;
+	}
 
-	for (unsigned int i = 0; i < moduleList.size();i++)
+	for (unsigned int i = 0; i < moduleList.size(); i++)
 	{
 		setModulePriority(&moduleList[i]);
 
@@ -35,7 +35,7 @@ void ApiReader::readApisFromModuleList()
 			maxValidAddress = moduleList[i].modBaseAddr + moduleList[i].modBaseSize;
 		}
 
-		Scylla::windowLog.log(L"Module parsing: %s",moduleList[i].fullPath);
+		Scylla::windowLog.log(L"Module parsing: %s", moduleList[i].fullPath);
 
 		if (!moduleList[i].isAlreadyParsed)
 		{
@@ -44,11 +44,11 @@ void ApiReader::readApisFromModuleList()
 	}
 
 #ifdef DEBUG_COMMENTS
-	Scylla::debugLog.log(L"Address Min " PRINTF_DWORD_PTR_FULL L" Max " PRINTF_DWORD_PTR_FULL L"\nimagebase " PRINTF_DWORD_PTR_FULL L" maxValidAddress " PRINTF_DWORD_PTR_FULL, minApiAddress, maxApiAddress, targetImageBase ,maxValidAddress);
+	Scylla::debugLog.log(L"Address Min " PRINTF_DWORD_PTR_FULL L" Max " PRINTF_DWORD_PTR_FULL L"\nimagebase " PRINTF_DWORD_PTR_FULL L" maxValidAddress " PRINTF_DWORD_PTR_FULL, minApiAddress, maxApiAddress, targetImageBase, maxValidAddress);
 #endif
 }
 
-void ApiReader::parseModule(ModuleInfo *module)
+void ApiReader::parseModule(ModuleInfo* module)
 {
 	module->parsing = true;
 
@@ -71,11 +71,11 @@ void ApiReader::parseModule(ModuleInfo *module)
 			parseModuleWithProcess(module);
 		}
 	}
-	
+
 	module->isAlreadyParsed = true;
 }
 
-void ApiReader::parseModuleWithMapping(ModuleInfo *moduleInfo)
+void ApiReader::parseModuleWithMapping(ModuleInfo* moduleInfo)
 {
 	LPVOID fileMapping = 0;
 	PIMAGE_NT_HEADERS pNtHeader = 0;
@@ -111,18 +111,18 @@ inline bool ApiReader::isApiForwarded(DWORD_PTR rva, PIMAGE_NT_HEADERS pNtHeader
 	}
 }
 
-void ApiReader::handleForwardedApi(DWORD_PTR vaStringPointer,char * functionNameParent, DWORD_PTR rvaParent, WORD ordinalParent, ModuleInfo *moduleParent)
+void ApiReader::handleForwardedApi(DWORD_PTR vaStringPointer, char* functionNameParent, DWORD_PTR rvaParent, WORD ordinalParent, ModuleInfo* moduleParent)
 {
 	size_t dllNameLength = 0;
 	WORD ordinal = 0;
-	ModuleInfo *module = 0;
+	ModuleInfo* module = 0;
 	DWORD_PTR vaApi = 0;
 	DWORD_PTR rvaApi = 0;
-	char dllName[100] = {0};
-	WCHAR dllNameW[100] = {0};
-	char *fordwardedString = (char *)vaStringPointer;
-	char *searchFunctionName = strchr(fordwardedString, '.');
-	
+	char dllName[100] = { 0 };
+	WCHAR dllNameW[100] = { 0 };
+	char* fordwardedString = (char*)vaStringPointer;
+	char* searchFunctionName = strchr(fordwardedString, '.');
+
 
 	if (!searchFunctionName)
 		return;
@@ -140,7 +140,7 @@ void ApiReader::handleForwardedApi(DWORD_PTR vaStringPointer,char * functionName
 
 	searchFunctionName++;
 
-	if (strchr(searchFunctionName,'#'))
+	if (strchr(searchFunctionName, '#'))
 	{
 		searchFunctionName++;
 		ordinal = (WORD)atoi(searchFunctionName);
@@ -149,8 +149,8 @@ void ApiReader::handleForwardedApi(DWORD_PTR vaStringPointer,char * functionName
 	//Since Windows 7
 	if (!_strnicmp(dllName, "API-", 4) || !_strnicmp(dllName, "EXT-", 4)) //API_SET_PREFIX_NAME, API_SET_EXTENSION
 	{
-		/* 
-		    Info: http://www.nirsoft.net/articles/windows_7_kernel_architecture_changes.html
+		/*
+			Info: http://www.nirsoft.net/articles/windows_7_kernel_architecture_changes.html
 		*/
 		FARPROC addy = 0;
 		HMODULE hModTemp = GetModuleHandleA(dllName);
@@ -161,27 +161,27 @@ void ApiReader::handleForwardedApi(DWORD_PTR vaStringPointer,char * functionName
 
 		if (ordinal)
 		{
-			addy = GetProcAddress(hModTemp, (char *)ordinal);
+			addy = GetProcAddress(hModTemp, (char*)ordinal);
 		}
 		else
 		{
 			addy = GetProcAddress(hModTemp, searchFunctionName);
 		}
 #ifdef DEBUG_COMMENTS
-		Scylla::debugLog.log(L"API_SET_PREFIX_NAME %s %S Module Handle %p addy %p",moduleParent->fullPath, dllName, hModTemp, addy);
+		Scylla::debugLog.log(L"API_SET_PREFIX_NAME %s %S Module Handle %p addy %p", moduleParent->fullPath, dllName, hModTemp, addy);
 #endif
 		if (addy != 0)
 		{
-			addApi(functionNameParent,0, ordinalParent, (DWORD_PTR)addy, (DWORD_PTR)addy - (DWORD_PTR)hModTemp, true, moduleParent);
+			addApi(functionNameParent, 0, ordinalParent, (DWORD_PTR)addy, (DWORD_PTR)addy - (DWORD_PTR)hModTemp, true, moduleParent);
 		}
 
 		return;
 	}
 
 	strcat_s(dllName, ".dll");
-	
+
 	StringConversion::ToUTF16(dllName, dllNameW, _countof(dllNameW));
-	
+
 	if (!_wcsicmp(dllNameW, moduleParent->getFilename()))
 	{
 		module = moduleParent;
@@ -196,7 +196,7 @@ void ApiReader::handleForwardedApi(DWORD_PTR vaStringPointer,char * functionName
 		/*if ((module->isAlreadyParsed == false) && (module != moduleParent))
 		{
 			//do API extract
-			
+
 			if (module->parsing == true)
 			{
 				//some stupid circle dependency
@@ -221,18 +221,18 @@ void ApiReader::handleForwardedApi(DWORD_PTR vaStringPointer,char * functionName
 		if (rvaApi == 0)
 		{
 #ifdef DEBUG_COMMENTS
-			Scylla::debugLog.log(L"handleForwardedApi :: Api not found, this is really BAD! %S",fordwardedString);
+			Scylla::debugLog.log(L"handleForwardedApi :: Api not found, this is really BAD! %S", fordwardedString);
 #endif
 		}
 		else
 		{
-			addApi(functionNameParent,0, ordinalParent, vaApi, rvaApi, true, moduleParent);
+			addApi(functionNameParent, 0, ordinalParent, vaApi, rvaApi, true, moduleParent);
 		}
 	}
 
 }
 
-ModuleInfo * ApiReader::findModuleByName(WCHAR *name)
+ModuleInfo* ApiReader::findModuleByName(WCHAR* name)
 {
 	for (unsigned int i = 0; i < moduleList.size(); i++) {
 		if (!_wcsicmp(moduleList[i].getFilename(), name))
@@ -244,14 +244,14 @@ ModuleInfo * ApiReader::findModuleByName(WCHAR *name)
 	return 0;
 }
 
-void ApiReader::addApiWithoutName(WORD ordinal, DWORD_PTR va, DWORD_PTR rva,bool isForwarded, ModuleInfo *moduleInfo)
+void ApiReader::addApiWithoutName(WORD ordinal, DWORD_PTR va, DWORD_PTR rva, bool isForwarded, ModuleInfo* moduleInfo)
 {
 	addApi(0, 0, ordinal, va, rva, isForwarded, moduleInfo);
 }
 
-void ApiReader::addApi(char *functionName, WORD hint, WORD ordinal, DWORD_PTR va, DWORD_PTR rva, bool isForwarded, ModuleInfo *moduleInfo)
+void ApiReader::addApi(char* functionName, WORD hint, WORD ordinal, DWORD_PTR va, DWORD_PTR rva, bool isForwarded, ModuleInfo* moduleInfo)
 {
-	ApiInfo *apiInfo = new ApiInfo();
+	ApiInfo* apiInfo = new ApiInfo();
 
 	if ((functionName != 0) && (strlen(functionName) < _countof(apiInfo->name)))
 	{
@@ -276,9 +276,9 @@ void ApiReader::addApi(char *functionName, WORD hint, WORD ordinal, DWORD_PTR va
 	apiList.insert(API_Pair(va, apiInfo));
 }
 
-BYTE * ApiReader::getHeaderFromProcess(ModuleInfo * module)
+BYTE* ApiReader::getHeaderFromProcess(ModuleInfo* module)
 {
-	BYTE *bufferHeader = 0;
+	BYTE* bufferHeader = 0;
 	DWORD readSize = 0;
 
 	if (module->modBaseSize < PE_HEADER_BYTES_COUNT)
@@ -292,7 +292,7 @@ BYTE * ApiReader::getHeaderFromProcess(ModuleInfo * module)
 
 	bufferHeader = new BYTE[readSize];
 
-	if(!readMemoryFromProcess(module->modBaseAddr, readSize, bufferHeader))
+	if (!readMemoryFromProcess(module->modBaseAddr, readSize, bufferHeader))
 	{
 #ifdef DEBUG_COMMENTS
 		Scylla::debugLog.log(L"getHeaderFromProcess :: Error reading header");
@@ -306,10 +306,10 @@ BYTE * ApiReader::getHeaderFromProcess(ModuleInfo * module)
 	}
 }
 
-BYTE * ApiReader::getExportTableFromProcess(ModuleInfo * module, PIMAGE_NT_HEADERS pNtHeader)
+BYTE* ApiReader::getExportTableFromProcess(ModuleInfo* module, PIMAGE_NT_HEADERS pNtHeader)
 {
 	DWORD readSize = 0;
-	BYTE *bufferExportTable = 0;
+	BYTE* bufferExportTable = 0;
 
 	readSize = pNtHeader->OptionalHeader.DataDirectory[IMAGE_DIRECTORY_ENTRY_EXPORT].Size;
 
@@ -326,15 +326,15 @@ BYTE * ApiReader::getExportTableFromProcess(ModuleInfo * module, PIMAGE_NT_HEADE
 	{
 		bufferExportTable = new BYTE[readSize];
 
-        if (!bufferExportTable)
-        {
+		if (!bufferExportTable)
+		{
 #ifdef DEBUG_COMMENTS
-            Scylla::debugLog.log(L"Something is wrong with the PE Header here Export table size %d", readSize);
+			Scylla::debugLog.log(L"Something is wrong with the PE Header here Export table size %d", readSize);
 #endif
-            return 0;
-        }
+			return 0;
+		}
 
-		if(!readMemoryFromProcess(module->modBaseAddr + pNtHeader->OptionalHeader.DataDirectory[IMAGE_DIRECTORY_ENTRY_EXPORT].VirtualAddress, readSize, bufferExportTable))
+		if (!readMemoryFromProcess(module->modBaseAddr + pNtHeader->OptionalHeader.DataDirectory[IMAGE_DIRECTORY_ENTRY_EXPORT].VirtualAddress, readSize, bufferExportTable))
 		{
 #ifdef DEBUG_COMMENTS
 			Scylla::debugLog.log(L"getExportTableFromProcess :: Error reading export table from process");
@@ -353,45 +353,45 @@ BYTE * ApiReader::getExportTableFromProcess(ModuleInfo * module, PIMAGE_NT_HEADE
 	}
 }
 
-void ApiReader::parseModuleWithProcess(ModuleInfo * module)
+void ApiReader::parseModuleWithProcess(ModuleInfo* module)
 {
 	PIMAGE_NT_HEADERS pNtHeader = 0;
 	PIMAGE_DOS_HEADER pDosHeader = 0;
-	BYTE *bufferHeader = 0;
-	BYTE *bufferExportTable = 0;
-    PeParser peParser(module->modBaseAddr, false);
+	BYTE* bufferHeader = 0;
+	BYTE* bufferExportTable = 0;
+	PeParser peParser(module->modBaseAddr, false);
 
-    if (!peParser.isValidPeFile())
-        return;
+	if (!peParser.isValidPeFile())
+		return;
 
-    pNtHeader = peParser.getCurrentNtHeader();
+	pNtHeader = peParser.getCurrentNtHeader();
 
 	if (peParser.hasExportDirectory())
 	{
 		bufferExportTable = getExportTableFromProcess(module, pNtHeader);
 
-		if(bufferExportTable)
+		if (bufferExportTable)
 		{
-			parseExportTable(module,pNtHeader,(PIMAGE_EXPORT_DIRECTORY)bufferExportTable, (DWORD_PTR)bufferExportTable - pNtHeader->OptionalHeader.DataDirectory[IMAGE_DIRECTORY_ENTRY_EXPORT].VirtualAddress);
+			parseExportTable(module, pNtHeader, (PIMAGE_EXPORT_DIRECTORY)bufferExportTable, (DWORD_PTR)bufferExportTable - pNtHeader->OptionalHeader.DataDirectory[IMAGE_DIRECTORY_ENTRY_EXPORT].VirtualAddress);
 			delete[] bufferExportTable;
 		}
 	}
 }
 
-void ApiReader::parseExportTable(ModuleInfo *module, PIMAGE_NT_HEADERS pNtHeader, PIMAGE_EXPORT_DIRECTORY pExportDir, DWORD_PTR deltaAddress)
+void ApiReader::parseExportTable(ModuleInfo* module, PIMAGE_NT_HEADERS pNtHeader, PIMAGE_EXPORT_DIRECTORY pExportDir, DWORD_PTR deltaAddress)
 {
-	DWORD *addressOfFunctionsArray = 0,*addressOfNamesArray = 0;
-	WORD *addressOfNameOrdinalsArray = 0;
-	char *functionName = 0;
+	DWORD* addressOfFunctionsArray = 0, * addressOfNamesArray = 0;
+	WORD* addressOfNameOrdinalsArray = 0;
+	char* functionName = 0;
 	DWORD_PTR RVA = 0, VA = 0;
 	WORD ordinal = 0;
 	WORD i = 0, j = 0;
 	bool withoutName;
 
 
-	addressOfFunctionsArray = (DWORD *)((DWORD_PTR)pExportDir->AddressOfFunctions + deltaAddress);
-	addressOfNamesArray = (DWORD *)((DWORD_PTR)pExportDir->AddressOfNames + deltaAddress);
-	addressOfNameOrdinalsArray = (WORD *)((DWORD_PTR)pExportDir->AddressOfNameOrdinals + deltaAddress);
+	addressOfFunctionsArray = (DWORD*)((DWORD_PTR)pExportDir->AddressOfFunctions + deltaAddress);
+	addressOfNamesArray = (DWORD*)((DWORD_PTR)pExportDir->AddressOfNames + deltaAddress);
+	addressOfNameOrdinalsArray = (WORD*)((DWORD_PTR)pExportDir->AddressOfNameOrdinals + deltaAddress);
 
 #ifdef DEBUG_COMMENTS
 	Scylla::debugLog.log(L"parseExportTable :: module %s NumberOfNames %X", module->fullPath, pExportDir->NumberOfNames);
@@ -409,14 +409,14 @@ void ApiReader::parseExportTable(ModuleInfo *module, PIMAGE_NT_HEADERS pNtHeader
 #endif
 		if (!isApiBlacklisted(functionName))
 		{
-			if (!isApiForwarded(RVA,pNtHeader))
+			if (!isApiForwarded(RVA, pNtHeader))
 			{
-				addApi(functionName, i, ordinal,VA,RVA,false,module);
+				addApi(functionName, i, ordinal, VA, RVA, false, module);
 			}
 			else
 			{
 				//printf("Forwarded: %s\n",functionName);
-				handleForwardedApi(RVA + deltaAddress,functionName,RVA,ordinal,module);
+				handleForwardedApi(RVA + deltaAddress, functionName, RVA, ordinal, module);
 			}
 		}
 
@@ -430,7 +430,7 @@ void ApiReader::parseExportTable(ModuleInfo *module, PIMAGE_NT_HEADERS pNtHeader
 			withoutName = true;
 			for (j = 0; j < pExportDir->NumberOfNames; j++)
 			{
-				if(addressOfNameOrdinalsArray[j] == i)
+				if (addressOfNameOrdinalsArray[j] == i)
 				{
 					withoutName = false;
 					break;
@@ -438,18 +438,18 @@ void ApiReader::parseExportTable(ModuleInfo *module, PIMAGE_NT_HEADERS pNtHeader
 			}
 			if (withoutName && addressOfFunctionsArray[i] != 0)
 			{
-				ordinal = (WORD)(i+pExportDir->Base);
+				ordinal = (WORD)(i + pExportDir->Base);
 				RVA = addressOfFunctionsArray[i];
 				VA = (addressOfFunctionsArray[i] + module->modBaseAddr);
 
 
-				if (!isApiForwarded(RVA,pNtHeader))
+				if (!isApiForwarded(RVA, pNtHeader))
 				{
-					addApiWithoutName(ordinal,VA,RVA,false,module);
+					addApiWithoutName(ordinal, VA, RVA, false, module);
 				}
 				else
 				{
-					handleForwardedApi(RVA + deltaAddress,0,RVA,ordinal,module);
+					handleForwardedApi(RVA + deltaAddress, 0, RVA, ordinal, module);
 				}
 
 			}
@@ -457,17 +457,17 @@ void ApiReader::parseExportTable(ModuleInfo *module, PIMAGE_NT_HEADERS pNtHeader
 	}
 }
 
-void ApiReader::findApiByModuleAndOrdinal(ModuleInfo * module, WORD ordinal, DWORD_PTR * vaApi, DWORD_PTR * rvaApi)
+void ApiReader::findApiByModuleAndOrdinal(ModuleInfo* module, WORD ordinal, DWORD_PTR* vaApi, DWORD_PTR* rvaApi)
 {
-	findApiByModule(module,0,ordinal,vaApi,rvaApi);
+	findApiByModule(module, 0, ordinal, vaApi, rvaApi);
 }
 
-void ApiReader::findApiByModuleAndName(ModuleInfo * module, char * searchFunctionName, DWORD_PTR * vaApi, DWORD_PTR * rvaApi)
+void ApiReader::findApiByModuleAndName(ModuleInfo* module, char* searchFunctionName, DWORD_PTR* vaApi, DWORD_PTR* rvaApi)
 {
-	findApiByModule(module,searchFunctionName,0,vaApi,rvaApi);
+	findApiByModule(module, searchFunctionName, 0, vaApi, rvaApi);
 }
 
-void ApiReader::findApiByModule(ModuleInfo * module, char * searchFunctionName, WORD ordinal, DWORD_PTR * vaApi, DWORD_PTR * rvaApi)
+void ApiReader::findApiByModule(ModuleInfo* module, char* searchFunctionName, WORD ordinal, DWORD_PTR* vaApi, DWORD_PTR* rvaApi)
 {
 	if (isModuleLoadedInOwnProcess(module))
 	{
@@ -506,11 +506,11 @@ void ApiReader::findApiByModule(ModuleInfo * module, char * searchFunctionName, 
 	else
 	{
 		//search api in extern process
-		findApiInProcess(module,searchFunctionName,ordinal,vaApi,rvaApi);
+		findApiInProcess(module, searchFunctionName, ordinal, vaApi, rvaApi);
 	}
 }
 
-bool ApiReader::isModuleLoadedInOwnProcess(ModuleInfo * module)
+bool ApiReader::isModuleLoadedInOwnProcess(ModuleInfo* module)
 {
 	for (unsigned int i = 0; i < ownModuleList.size(); i++)
 	{
@@ -523,7 +523,7 @@ bool ApiReader::isModuleLoadedInOwnProcess(ModuleInfo * module)
 	return false;
 }
 
-void ApiReader::parseModuleWithOwnProcess( ModuleInfo * module )
+void ApiReader::parseModuleWithOwnProcess(ModuleInfo* module)
 {
 	PIMAGE_NT_HEADERS pNtHeader = 0;
 	PIMAGE_DOS_HEADER pDosHeader = 0;
@@ -565,12 +565,12 @@ bool ApiReader::isPeAndExportTableValid(PIMAGE_NT_HEADERS pNtHeader)
 	}
 }
 
-void ApiReader::findApiInProcess(ModuleInfo * module, char * searchFunctionName, WORD ordinal, DWORD_PTR * vaApi, DWORD_PTR * rvaApi)
+void ApiReader::findApiInProcess(ModuleInfo* module, char* searchFunctionName, WORD ordinal, DWORD_PTR* vaApi, DWORD_PTR* rvaApi)
 {
 	PIMAGE_NT_HEADERS pNtHeader = 0;
 	PIMAGE_DOS_HEADER pDosHeader = 0;
-	BYTE *bufferHeader = 0;
-	BYTE *bufferExportTable = 0;
+	BYTE* bufferHeader = 0;
+	BYTE* bufferExportTable = 0;
 
 
 	bufferHeader = getHeaderFromProcess(module);
@@ -585,9 +585,9 @@ void ApiReader::findApiInProcess(ModuleInfo * module, char * searchFunctionName,
 	{
 		bufferExportTable = getExportTableFromProcess(module, pNtHeader);
 
-		if(bufferExportTable)
+		if (bufferExportTable)
 		{
-			findApiInExportTable(module,(PIMAGE_EXPORT_DIRECTORY)bufferExportTable, (DWORD_PTR)bufferExportTable - pNtHeader->OptionalHeader.DataDirectory[IMAGE_DIRECTORY_ENTRY_EXPORT].VirtualAddress,searchFunctionName,ordinal,vaApi,rvaApi);
+			findApiInExportTable(module, (PIMAGE_EXPORT_DIRECTORY)bufferExportTable, (DWORD_PTR)bufferExportTable - pNtHeader->OptionalHeader.DataDirectory[IMAGE_DIRECTORY_ENTRY_EXPORT].VirtualAddress, searchFunctionName, ordinal, vaApi, rvaApi);
 			delete[] bufferExportTable;
 		}
 	}
@@ -595,16 +595,16 @@ void ApiReader::findApiInProcess(ModuleInfo * module, char * searchFunctionName,
 	delete[] bufferHeader;
 }
 
-bool ApiReader::findApiInExportTable(ModuleInfo *module, PIMAGE_EXPORT_DIRECTORY pExportDir, DWORD_PTR deltaAddress, char * searchFunctionName, WORD ordinal, DWORD_PTR * vaApi, DWORD_PTR * rvaApi)
+bool ApiReader::findApiInExportTable(ModuleInfo* module, PIMAGE_EXPORT_DIRECTORY pExportDir, DWORD_PTR deltaAddress, char* searchFunctionName, WORD ordinal, DWORD_PTR* vaApi, DWORD_PTR* rvaApi)
 {
-	DWORD *addressOfFunctionsArray = 0,*addressOfNamesArray = 0;
-	WORD *addressOfNameOrdinalsArray = 0;
-	char *functionName = 0;
+	DWORD* addressOfFunctionsArray = 0, * addressOfNamesArray = 0;
+	WORD* addressOfNameOrdinalsArray = 0;
+	char* functionName = 0;
 	DWORD i = 0, j = 0;
 
-	addressOfFunctionsArray = (DWORD *)((DWORD_PTR)pExportDir->AddressOfFunctions + deltaAddress);
-	addressOfNamesArray = (DWORD *)((DWORD_PTR)pExportDir->AddressOfNames + deltaAddress);
-	addressOfNameOrdinalsArray = (WORD *)((DWORD_PTR)pExportDir->AddressOfNameOrdinals + deltaAddress);
+	addressOfFunctionsArray = (DWORD*)((DWORD_PTR)pExportDir->AddressOfFunctions + deltaAddress);
+	addressOfNamesArray = (DWORD*)((DWORD_PTR)pExportDir->AddressOfNames + deltaAddress);
+	addressOfNameOrdinalsArray = (WORD*)((DWORD_PTR)pExportDir->AddressOfNameOrdinals + deltaAddress);
 
 	if (searchFunctionName)
 	{
@@ -612,7 +612,7 @@ bool ApiReader::findApiInExportTable(ModuleInfo *module, PIMAGE_EXPORT_DIRECTORY
 		{
 			functionName = (char*)(addressOfNamesArray[i] + deltaAddress);
 
-			if (!strcmp(functionName,searchFunctionName))
+			if (!strcmp(functionName, searchFunctionName))
 			{
 				*rvaApi = addressOfFunctionsArray[addressOfNameOrdinalsArray[i]];
 				*vaApi = addressOfFunctionsArray[addressOfNameOrdinalsArray[i]] + module->modBaseAddr;
@@ -624,7 +624,7 @@ bool ApiReader::findApiInExportTable(ModuleInfo *module, PIMAGE_EXPORT_DIRECTORY
 	{
 		for (i = 0; i < pExportDir->NumberOfFunctions; i++)
 		{
-			if (ordinal == (i+pExportDir->Base))
+			if (ordinal == (i + pExportDir->Base))
 			{
 				*rvaApi = addressOfFunctionsArray[i];
 				*vaApi = (addressOfFunctionsArray[i] + module->modBaseAddr);
@@ -637,9 +637,9 @@ bool ApiReader::findApiInExportTable(ModuleInfo *module, PIMAGE_EXPORT_DIRECTORY
 }
 
 
-void ApiReader::setModulePriority(ModuleInfo * module)
+void ApiReader::setModulePriority(ModuleInfo* module)
 {
-	const WCHAR *moduleFileName = module->getFilename();
+	const WCHAR* moduleFileName = module->getFilename();
 
 	//imports by kernelbase don't exist
 	if (!_wcsicmp(moduleFileName, L"kernelbase.dll"))
@@ -662,10 +662,10 @@ void ApiReader::setModulePriority(ModuleInfo * module)
 	{
 		module->priority = 2;
 	}
-    else if (!_wcsnicmp(moduleFileName, L"API-", 4) || !_wcsnicmp(moduleFileName, L"EXT-", 4)) //API_SET_PREFIX_NAME, API_SET_EXTENSION
-    {
-        module->priority = 0;
-    }
+	else if (!_wcsnicmp(moduleFileName, L"API-", 4) || !_wcsnicmp(moduleFileName, L"EXT-", 4)) //API_SET_PREFIX_NAME, API_SET_EXTENSION
+	{
+		module->priority = 0;
+	}
 	else
 	{
 		module->priority = 1;
@@ -677,13 +677,13 @@ bool ApiReader::isApiAddressValid(DWORD_PTR virtualAddress)
 	return apiList.count(virtualAddress) > 0;
 }
 
-ApiInfo * ApiReader::getApiByVirtualAddress(DWORD_PTR virtualAddress, bool * isSuspect)
+ApiInfo* ApiReader::getApiByVirtualAddress(DWORD_PTR virtualAddress, bool* isSuspect)
 {
-	stdext::hash_multimap<DWORD_PTR, ApiInfo *>::iterator it1, it2;
+	std::unordered_multimap<DWORD_PTR, ApiInfo*>::iterator it1, it2;
 	size_t c = 0;
 	size_t countDuplicates = apiList.count(virtualAddress);
 	int countHighPriority = 0;
-	ApiInfo *apiFound = 0;
+	ApiInfo* apiFound = 0;
 
 
 	if (countDuplicates == 0)
@@ -695,14 +695,14 @@ ApiInfo * ApiReader::getApiByVirtualAddress(DWORD_PTR virtualAddress, bool * isS
 		//API is 100% correct
 		*isSuspect = false;
 		it1 = apiList.find(virtualAddress); // Find first match.
-		return (ApiInfo *)((*it1).second);
+		return (ApiInfo*)((*it1).second);
 	}
 	else
 	{
 		it1 = apiList.find(virtualAddress); // Find first match.
 
 		//any high priority with a name
-		apiFound = getScoredApi(it1,countDuplicates,true,false,false,true,false,false,false,false);
+		apiFound = getScoredApi(it1, countDuplicates, true, false, false, true, false, false, false, false);
 
 		if (apiFound)
 			return apiFound;
@@ -710,43 +710,43 @@ ApiInfo * ApiReader::getApiByVirtualAddress(DWORD_PTR virtualAddress, bool * isS
 		*isSuspect = true;
 
 		//high priority with a name and ansi/unicode name
-		apiFound = getScoredApi(it1,countDuplicates,true,true,false,true,false,false,false,false);
+		apiFound = getScoredApi(it1, countDuplicates, true, true, false, true, false, false, false, false);
 
 		if (apiFound)
 			return apiFound;
 
 		//priority 2 with no underline in name
-		apiFound = getScoredApi(it1,countDuplicates,true,false,true,false,false,false,true,false);
+		apiFound = getScoredApi(it1, countDuplicates, true, false, true, false, false, false, true, false);
 
 		if (apiFound)
 			return apiFound;
 
 		//priority 1 with a name
-		apiFound = getScoredApi(it1,countDuplicates,true,false,false,false,false,true,false,false);
+		apiFound = getScoredApi(it1, countDuplicates, true, false, false, false, false, true, false, false);
 
 		if (apiFound)
 			return apiFound;
 
 		//With a name
-		apiFound = getScoredApi(it1,countDuplicates,true,false,false,false,false,false,false,false);
+		apiFound = getScoredApi(it1, countDuplicates, true, false, false, false, false, false, false, false);
 
 		if (apiFound)
 			return apiFound;
 
 		//any with priority, name, ansi/unicode
-		apiFound = getScoredApi(it1,countDuplicates,true,true,false,true,false,false,false,true);
+		apiFound = getScoredApi(it1, countDuplicates, true, true, false, true, false, false, false, true);
 
 		if (apiFound)
 			return apiFound;
 
 		//any with priority
-		apiFound = getScoredApi(it1,countDuplicates,false,false,false,true,false,false,false,true);
+		apiFound = getScoredApi(it1, countDuplicates, false, false, false, true, false, false, false, true);
 
 		if (apiFound)
 			return apiFound;
 
 		//has prio 0 and name
-		apiFound = getScoredApi(it1,countDuplicates,false,false,false,false,true,false,false,true);
+		apiFound = getScoredApi(it1, countDuplicates, false, false, false, false, true, false, false, true);
 
 		if (apiFound)
 			return apiFound;
@@ -756,16 +756,16 @@ ApiInfo * ApiReader::getApiByVirtualAddress(DWORD_PTR virtualAddress, bool * isS
 	Scylla::windowLog.log(L"getApiByVirtualAddress :: There is a api resolving bug, VA: " PRINTF_DWORD_PTR_FULL, virtualAddress);
 	for (size_t c = 0; c < countDuplicates; c++, it1++)
 	{
-		apiFound = (ApiInfo *)((*it1).second);
+		apiFound = (ApiInfo*)((*it1).second);
 		Scylla::windowLog.log(L"-> Possible API: %S ord: %d ", apiFound->name, apiFound->ordinal);
 	}
-	return (ApiInfo *) 1; 
+	return (ApiInfo*)1;
 }
 
-ApiInfo * ApiReader::getScoredApi(stdext::hash_multimap<DWORD_PTR, ApiInfo *>::iterator it1,size_t countDuplicates, bool hasName, bool hasUnicodeAnsiName, bool hasNoUnderlineInName, bool hasPrioDll,bool hasPrio0Dll,bool hasPrio1Dll, bool hasPrio2Dll, bool firstWin )
+ApiInfo* ApiReader::getScoredApi(std::unordered_multimap<DWORD_PTR, ApiInfo*>::iterator it1, size_t countDuplicates, bool hasName, bool hasUnicodeAnsiName, bool hasNoUnderlineInName, bool hasPrioDll, bool hasPrio0Dll, bool hasPrio1Dll, bool hasPrio2Dll, bool firstWin)
 {
-	ApiInfo * foundApi = 0;
-	ApiInfo * foundMatchingApi = 0;
+	ApiInfo* foundApi = 0;
+	ApiInfo* foundMatchingApi = 0;
 	int countFoundApis = 0;
 	int scoreNeeded = 0;
 	int scoreValue = 0;
@@ -799,7 +799,7 @@ ApiInfo * ApiReader::getScoredApi(stdext::hash_multimap<DWORD_PTR, ApiInfo *>::i
 
 	for (size_t c = 0; c < countDuplicates; c++, it1++)
 	{
-		foundApi = (ApiInfo *)((*it1).second);
+		foundApi = (ApiInfo*)((*it1).second);
 		scoreValue = 0;
 
 		if (hasName)
@@ -879,7 +879,7 @@ ApiInfo * ApiReader::getScoredApi(stdext::hash_multimap<DWORD_PTR, ApiInfo *>::i
 	}
 	else
 	{
-		return (ApiInfo *)0;
+		return (ApiInfo*)0;
 	}
 
 }
@@ -902,13 +902,13 @@ void ApiReader::setMinMaxApiAddress(DWORD_PTR virtualAddress)
 	}
 }
 
-void  ApiReader::readAndParseIAT(DWORD_PTR addressIAT, DWORD sizeIAT, std::map<DWORD_PTR, ImportModuleThunk> &moduleListNew)
+void  ApiReader::readAndParseIAT(DWORD_PTR addressIAT, DWORD sizeIAT, std::map<DWORD_PTR, ImportModuleThunk>& moduleListNew)
 {
 	moduleThunkList = &moduleListNew;
-	BYTE *dataIat = new BYTE[sizeIAT];
-	if (readMemoryFromProcess(addressIAT,sizeIAT,dataIat))
+	BYTE* dataIat = new BYTE[sizeIAT];
+	if (readMemoryFromProcess(addressIAT, sizeIAT, dataIat))
 	{
-		parseIAT(addressIAT,dataIat,sizeIAT);
+		parseIAT(addressIAT, dataIat, sizeIAT);
 	}
 	else
 	{
@@ -920,80 +920,80 @@ void  ApiReader::readAndParseIAT(DWORD_PTR addressIAT, DWORD sizeIAT, std::map<D
 	delete[] dataIat;
 }
 
-void ApiReader::parseIAT(DWORD_PTR addressIAT, BYTE * iatBuffer, SIZE_T size)
+void ApiReader::parseIAT(DWORD_PTR addressIAT, BYTE* iatBuffer, SIZE_T size)
 {
-	ApiInfo *apiFound = 0;
-	ModuleInfo *module = 0;
+	ApiInfo* apiFound = 0;
+	ModuleInfo* module = 0;
 	bool isSuspect = false;
 	int countApiFound = 0, countApiNotFound = 0;
-	DWORD_PTR * pIATAddress = (DWORD_PTR *)iatBuffer;
+	DWORD_PTR* pIATAddress = (DWORD_PTR*)iatBuffer;
 	SIZE_T sizeIAT = size / sizeof(DWORD_PTR);
 
 	for (SIZE_T i = 0; i < sizeIAT; i++)
 	{
 		//Scylla::windowLog.log(L"%08X %08X %d von %d", addressIAT + (DWORD_PTR)&pIATAddress[i] - (DWORD_PTR)iatBuffer, pIATAddress[i],i,sizeIAT);
 
-        if (!isInvalidMemoryForIat(pIATAddress[i]))
-        {
+		if (!isInvalidMemoryForIat(pIATAddress[i]))
+		{
 #ifdef DEBUG_COMMENTS
 			Scylla::debugLog.log(L"min %p max %p address %p", minApiAddress, maxApiAddress, pIATAddress[i]);
 #endif
-            if ( (pIATAddress[i] > minApiAddress) && (pIATAddress[i] < maxApiAddress) )
-            {
+			if ((pIATAddress[i] > minApiAddress) && (pIATAddress[i] < maxApiAddress))
+			{
 
-                apiFound = getApiByVirtualAddress(pIATAddress[i], &isSuspect);
+				apiFound = getApiByVirtualAddress(pIATAddress[i], &isSuspect);
 
 #ifdef DEBUG_COMMENTS
 				Scylla::debugLog.log(L"apiFound %p address %p", apiFound, pIATAddress[i]);
 #endif
-                if (apiFound == 0)
-                {
-                    Scylla::windowLog.log(L"getApiByVirtualAddress :: No Api found " PRINTF_DWORD_PTR_FULL, pIATAddress[i]);
-                }
-                if (apiFound == (ApiInfo *)1)
-                {
+				if (apiFound == 0)
+				{
+					Scylla::windowLog.log(L"getApiByVirtualAddress :: No Api found " PRINTF_DWORD_PTR_FULL, pIATAddress[i]);
+				}
+				if (apiFound == (ApiInfo*)1)
+				{
 #ifdef DEBUG_COMMENTS
-                    Scylla::debugLog.log(L"apiFound == (ApiInfo *)1 -> " PRINTF_DWORD_PTR_FULL, pIATAddress[i]);
+					Scylla::debugLog.log(L"apiFound == (ApiInfo *)1 -> " PRINTF_DWORD_PTR_FULL, pIATAddress[i]);
 #endif
-                }
-                else if (apiFound)
-                {
-                    countApiFound++;
+				}
+				else if (apiFound)
+				{
+					countApiFound++;
 #ifdef DEBUG_COMMENTS
-                    Scylla::debugLog.log(PRINTF_DWORD_PTR_FULL L" %s %d %s", apiFound->va, apiFound->module->getFilename(), apiFound->ordinal, apiFound->name);
+					Scylla::debugLog.log(PRINTF_DWORD_PTR_FULL L" %s %d %s", apiFound->va, apiFound->module->getFilename(), apiFound->ordinal, apiFound->name);
 #endif
-                    if (module != apiFound->module)
-                    {
-                        module = apiFound->module;
-                        addFoundApiToModuleList(addressIAT + (DWORD_PTR)&pIATAddress[i] - (DWORD_PTR)iatBuffer, apiFound, true, isSuspect);
-                    }
-                    else
-                    {
-                        addFoundApiToModuleList(addressIAT + (DWORD_PTR)&pIATAddress[i] - (DWORD_PTR)iatBuffer, apiFound, false, isSuspect);
-                    }
+					if (module != apiFound->module)
+					{
+						module = apiFound->module;
+						addFoundApiToModuleList(addressIAT + (DWORD_PTR)&pIATAddress[i] - (DWORD_PTR)iatBuffer, apiFound, true, isSuspect);
+					}
+					else
+					{
+						addFoundApiToModuleList(addressIAT + (DWORD_PTR)&pIATAddress[i] - (DWORD_PTR)iatBuffer, apiFound, false, isSuspect);
+					}
 
-                }
-                else
-                {
-                    countApiNotFound++;
-                    addNotFoundApiToModuleList(addressIAT + (DWORD_PTR)&pIATAddress[i] - (DWORD_PTR)iatBuffer, pIATAddress[i]);
-                    //printf("parseIAT :: API not found %08X\n", pIATAddress[i]);
-                }
-            }
-            else
-            {
-                //printf("parseIAT :: API not found %08X\n", pIATAddress[i]);
-                countApiNotFound++;
-                addNotFoundApiToModuleList(addressIAT + (DWORD_PTR)&pIATAddress[i] - (DWORD_PTR)iatBuffer, pIATAddress[i]);
-            }
-        }
+				}
+				else
+				{
+					countApiNotFound++;
+					addNotFoundApiToModuleList(addressIAT + (DWORD_PTR)&pIATAddress[i] - (DWORD_PTR)iatBuffer, pIATAddress[i]);
+					//printf("parseIAT :: API not found %08X\n", pIATAddress[i]);
+				}
+			}
+			else
+			{
+				//printf("parseIAT :: API not found %08X\n", pIATAddress[i]);
+				countApiNotFound++;
+				addNotFoundApiToModuleList(addressIAT + (DWORD_PTR)&pIATAddress[i] - (DWORD_PTR)iatBuffer, pIATAddress[i]);
+			}
+		}
 
 	}
 
 	Scylla::windowLog.log(L"IAT parsing finished, found %d valid APIs, missed %d APIs", countApiFound, countApiNotFound);
 }
 
-void ApiReader::addFoundApiToModuleList(DWORD_PTR iatAddressVA, ApiInfo * apiFound, bool isNewModule, bool isSuspect)
+void ApiReader::addFoundApiToModuleList(DWORD_PTR iatAddressVA, ApiInfo* apiFound, bool isNewModule, bool isSuspect)
 {
 	if (isNewModule)
 	{
@@ -1002,14 +1002,14 @@ void ApiReader::addFoundApiToModuleList(DWORD_PTR iatAddressVA, ApiInfo * apiFou
 	addFunctionToModuleList(apiFound, iatAddressVA, iatAddressVA - targetImageBase, apiFound->ordinal, true, isSuspect);
 }
 
-bool ApiReader::addModuleToModuleList(const WCHAR * moduleName, DWORD_PTR firstThunk)
+bool ApiReader::addModuleToModuleList(const WCHAR* moduleName, DWORD_PTR firstThunk)
 {
 	ImportModuleThunk module;
 
 	module.firstThunk = firstThunk;
 	wcscpy_s(module.moduleName, moduleName);
 
-	(*moduleThunkList).insert(std::pair<DWORD_PTR,ImportModuleThunk>(firstThunk,module));
+	(*moduleThunkList).insert(std::pair<DWORD_PTR, ImportModuleThunk>(firstThunk, module));
 
 	return true;
 }
@@ -1021,13 +1021,13 @@ void ApiReader::addUnknownModuleToModuleList(DWORD_PTR firstThunk)
 	module.firstThunk = firstThunk;
 	wcscpy_s(module.moduleName, L"?");
 
-	(*moduleThunkList).insert(std::pair<DWORD_PTR,ImportModuleThunk>(firstThunk,module));
+	(*moduleThunkList).insert(std::pair<DWORD_PTR, ImportModuleThunk>(firstThunk, module));
 }
 
-bool ApiReader::addFunctionToModuleList(ApiInfo * apiFound, DWORD_PTR va, DWORD_PTR rva, WORD ordinal, bool valid, bool suspect)
+bool ApiReader::addFunctionToModuleList(ApiInfo* apiFound, DWORD_PTR va, DWORD_PTR rva, WORD ordinal, bool valid, bool suspect)
 {
 	ImportThunk import;
-	ImportModuleThunk  * module = 0;
+	ImportModuleThunk* module = 0;
 	std::map<DWORD_PTR, ImportModuleThunk>::iterator iterator1;
 
 	if ((*moduleThunkList).size() > 1)
@@ -1075,18 +1075,18 @@ bool ApiReader::addFunctionToModuleList(ApiInfo * apiFound, DWORD_PTR va, DWORD_
 	}
 
 
-	import.suspect = suspect;
-	import.valid = valid;
-	import.va = va;
-	import.rva = rva;
-	import.apiAddressVA = apiFound->va;
-	import.ordinal = ordinal;
-	import.hint = (WORD)apiFound->hint;
+import.suspect = suspect;
+import.valid = valid;
+import.va = va;
+import.rva = rva;
+import.apiAddressVA = apiFound->va;
+import.ordinal = ordinal;
+import.hint = (WORD)apiFound->hint;
 
 	wcscpy_s(import.moduleName, apiFound->module->getFilename());
 	strcpy_s(import.name, apiFound->name);
 
-	module->thunkList.insert(std::pair<DWORD_PTR,ImportThunk>(import.rva, import));
+	module->thunkList.insert(std::pair<DWORD_PTR, ImportThunk>(import.rva, import));
 
 	return true;
 }
@@ -1096,7 +1096,7 @@ void ApiReader::clearAll()
 	minApiAddress = (DWORD_PTR)-1;
 	maxApiAddress = 0;
 
-	for ( stdext::hash_map<DWORD_PTR, ApiInfo *>::iterator it = apiList.begin(); it != apiList.end(); ++it )
+	for (std::unordered_map<DWORD_PTR, ApiInfo*>::iterator it = apiList.begin(); it != apiList.end(); ++it)
 	{
 		delete it->second;
 	}
@@ -1111,7 +1111,7 @@ void ApiReader::clearAll()
 bool ApiReader::addNotFoundApiToModuleList(DWORD_PTR iatAddressVA, DWORD_PTR apiAddress)
 {
 	ImportThunk import;
-	ImportModuleThunk  * module = 0;
+	ImportModuleThunk* module = 0;
 	std::map<DWORD_PTR, ImportModuleThunk>::iterator iterator1;
 	DWORD_PTR rva = iatAddressVA - targetImageBase;
 
@@ -1165,28 +1165,28 @@ bool ApiReader::addNotFoundApiToModuleList(DWORD_PTR iatAddressVA, DWORD_PTR api
 	if (!module)
 	{
 #ifdef DEBUG_COMMENTS
-		Scylla::debugLog.log(L"ImportsHandling::addFunction module not found rva " PRINTF_DWORD_PTR_FULL,rva);
+		Scylla::debugLog.log(L"ImportsHandling::addFunction module not found rva " PRINTF_DWORD_PTR_FULL, rva);
 #endif
 		return false;
 	}
 
 
-	import.suspect = true;
-	import.valid = false;
-	import.va = iatAddressVA;
-	import.rva = rva;
-	import.apiAddressVA = apiAddress;
-	import.ordinal = 0;
+import.suspect = true;
+import.valid = false;
+import.va = iatAddressVA;
+import.rva = rva;
+import.apiAddressVA = apiAddress;
+import.ordinal = 0;
 
 	wcscpy_s(import.moduleName, L"?");
 	strcpy_s(import.name, "?");
 
-	module->thunkList.insert(std::pair<DWORD_PTR,ImportThunk>(import.rva, import));
+	module->thunkList.insert(std::pair<DWORD_PTR, ImportThunk>(import.rva, import));
 
 	return true;
 }
 
-bool ApiReader::isApiBlacklisted( const char * functionName )
+bool ApiReader::isApiBlacklisted(const char* functionName)
 {
 	if (SystemInformation::currenOS < WIN_VISTA_32)
 	{
@@ -1213,7 +1213,7 @@ bool ApiReader::isApiBlacklisted( const char * functionName )
 #endif*/
 }
 
-bool ApiReader::isWinSxSModule( ModuleInfo * module )
+bool ApiReader::isWinSxSModule(ModuleInfo* module)
 {
 	if (wcsstr(module->fullPath, L"\\WinSxS\\"))
 	{
@@ -1229,29 +1229,29 @@ bool ApiReader::isWinSxSModule( ModuleInfo * module )
 	}
 }
 
-bool ApiReader::isInvalidMemoryForIat( DWORD_PTR address )
+bool ApiReader::isInvalidMemoryForIat(DWORD_PTR address)
 {
-    if (address == 0)
-        return true;
+	if (address == 0)
+		return true;
 
-   if (address == -1)
-       return true;
+	if (address == -1)
+		return true;
 
-   MEMORY_BASIC_INFORMATION memBasic = {0};
+	MEMORY_BASIC_INFORMATION memBasic = { 0 };
 
-   if (VirtualQueryEx(ProcessAccessHelp::hProcess, (LPCVOID)address, &memBasic, sizeof(MEMORY_BASIC_INFORMATION)))
-   {
-       if((memBasic.State == MEM_COMMIT) && ProcessAccessHelp::isPageAccessable(memBasic.Protect))
-       {
-           return false;
-       }
-       else
-       {
-           return true;
-       }
-   }
-   else
-   {
-       return true;
-   }
+	if (VirtualQueryEx(ProcessAccessHelp::hProcess, (LPCVOID)address, &memBasic, sizeof(MEMORY_BASIC_INFORMATION)))
+	{
+		if ((memBasic.State == MEM_COMMIT) && ProcessAccessHelp::isPageAccessable(memBasic.Protect))
+		{
+			return false;
+		}
+		else
+		{
+			return true;
+		}
+	}
+	else
+	{
+		return true;
+	}
 }
