@@ -2,8 +2,7 @@
 #include <algorithm>
 #include "ProcessAccessHelp.h"
 #include "Architecture.h"
-#include <Psapi.h>
-#pragma comment(lib, "Psapi.lib")
+
 
 DisassemblerGui::DisassemblerGui(DWORD_PTR startAddress, ApiReader * apiReaderObject)
 {

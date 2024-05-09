@@ -2,7 +2,6 @@
 
 #include "Architecture.h"
 #include "ProcessAccessHelp.h"
-#include <Psapi.h>
 #include "PeParser.h"
 
 WCHAR DumpMemoryGui::protectionString[100];

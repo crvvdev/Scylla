@@ -69,8 +69,8 @@ Global
 		{15051CE1-AB10-4239-973D-01B84F2AD0A9}.MinSizeRel|x64.Build.0 = dll|x64
 		{15051CE1-AB10-4239-973D-01B84F2AD0A9}.Release|Win32.ActiveCfg = dll|Win32
 		{15051CE1-AB10-4239-973D-01B84F2AD0A9}.Release|Win32.Build.0 = dll|Win32
-		{15051CE1-AB10-4239-973D-01B84F2AD0A9}.Release|x64.ActiveCfg = dll|x64
-		{15051CE1-AB10-4239-973D-01B84F2AD0A9}.Release|x64.Build.0 = dll|x64
+		{15051CE1-AB10-4239-973D-01B84F2AD0A9}.Release|x64.ActiveCfg = clib|x64
+		{15051CE1-AB10-4239-973D-01B84F2AD0A9}.Release|x64.Build.0 = clib|x64
 		{15051CE1-AB10-4239-973D-01B84F2AD0A9}.RelWithDebInfo|Win32.ActiveCfg = dll|Win32
 		{15051CE1-AB10-4239-973D-01B84F2AD0A9}.RelWithDebInfo|Win32.Build.0 = dll|Win32
 		{15051CE1-AB10-4239-973D-01B84F2AD0A9}.RelWithDebInfo|x64.ActiveCfg = dll|x64
@@ -102,5 +102,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {561E12E9-CA07-4793-AE4F-3C37886BD5BF}
 	EndGlobalSection
 EndGlobal

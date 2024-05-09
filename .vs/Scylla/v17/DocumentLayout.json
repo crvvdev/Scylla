@@ -3,8 +3,52 @@
   "WorkspaceRootPath": "A:\\work\\Scylla\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{710434C9-FC4B-4F1D-B318-E10ADC78499F}|Scylla\\Scylla.vcxproj|A:\\work\\Scylla\\Scylla\\ProcessLister.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{710434C9-FC4B-4F1D-B318-E10ADC78499F}|Scylla\\Scylla.vcxproj|solutionrelative:Scylla\\ProcessLister.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{710434C9-FC4B-4F1D-B318-E10ADC78499F}|Scylla\\Scylla.vcxproj|A:\\work\\Scylla\\Scylla\\ProcessAccessHelp.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{710434C9-FC4B-4F1D-B318-E10ADC78499F}|Scylla\\Scylla.vcxproj|solutionrelative:Scylla\\ProcessAccessHelp.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{710434C9-FC4B-4F1D-B318-E10ADC78499F}|Scylla\\Scylla.vcxproj|A:\\work\\Scylla\\Scylla\\DumpMemoryGui.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{710434C9-FC4B-4F1D-B318-E10ADC78499F}|Scylla\\Scylla.vcxproj|solutionrelative:Scylla\\DumpMemoryGui.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{710434C9-FC4B-4F1D-B318-E10ADC78499F}|Scylla\\Scylla.vcxproj|A:\\work\\Scylla\\Scylla\\DllInjection.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{710434C9-FC4B-4F1D-B318-E10ADC78499F}|Scylla\\Scylla.vcxproj|solutionrelative:Scylla\\DllInjection.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{710434C9-FC4B-4F1D-B318-E10ADC78499F}|Scylla\\Scylla.vcxproj|A:\\work\\Scylla\\Scylla\\DisassemblerGui.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{710434C9-FC4B-4F1D-B318-E10ADC78499F}|Scylla\\Scylla.vcxproj|solutionrelative:Scylla\\DisassemblerGui.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{710434C9-FC4B-4F1D-B318-E10ADC78499F}|Scylla\\Scylla.vcxproj|A:\\work\\Scylla\\Scylla\\ProcessLister.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{710434C9-FC4B-4F1D-B318-E10ADC78499F}|Scylla\\Scylla.vcxproj|solutionrelative:Scylla\\ProcessLister.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{710434C9-FC4B-4F1D-B318-E10ADC78499F}|Scylla\\Scylla.vcxproj|A:\\work\\Scylla\\Scylla\\NativeWinApi.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{710434C9-FC4B-4F1D-B318-E10ADC78499F}|Scylla\\Scylla.vcxproj|solutionrelative:Scylla\\NativeWinApi.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{710434C9-FC4B-4F1D-B318-E10ADC78499F}|Scylla\\Scylla.vcxproj|A:\\work\\Scylla\\Scylla\\SystemInformation.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{710434C9-FC4B-4F1D-B318-E10ADC78499F}|Scylla\\Scylla.vcxproj|solutionrelative:Scylla\\SystemInformation.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{710434C9-FC4B-4F1D-B318-E10ADC78499F}|Scylla\\Scylla.vcxproj|A:\\work\\Scylla\\Scylla\\ImportsHandling.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{710434C9-FC4B-4F1D-B318-E10ADC78499F}|Scylla\\Scylla.vcxproj|solutionrelative:Scylla\\ImportsHandling.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{710434C9-FC4B-4F1D-B318-E10ADC78499F}|Scylla\\Scylla.vcxproj|A:\\work\\Scylla\\Scylla\\main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{710434C9-FC4B-4F1D-B318-E10ADC78499F}|Scylla\\Scylla.vcxproj|solutionrelative:Scylla\\main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{710434C9-FC4B-4F1D-B318-E10ADC78499F}|Scylla\\Scylla.vcxproj|A:\\work\\Scylla\\Scylla\\ProcessAccessHelp.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{710434C9-FC4B-4F1D-B318-E10ADC78499F}|Scylla\\Scylla.vcxproj|solutionrelative:Scylla\\ProcessAccessHelp.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{710434C9-FC4B-4F1D-B318-E10ADC78499F}|Scylla\\Scylla.vcxproj|A:\\work\\Scylla\\Scylla\\SystemInformation.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{710434C9-FC4B-4F1D-B318-E10ADC78499F}|Scylla\\Scylla.vcxproj|solutionrelative:Scylla\\SystemInformation.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{710434C9-FC4B-4F1D-B318-E10ADC78499F}|Scylla\\Scylla.vcxproj|A:\\work\\Scylla\\Scylla\\TreeImportExport.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
@@ -13,10 +57,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{710434C9-FC4B-4F1D-B318-E10ADC78499F}|Scylla\\Scylla.vcxproj|A:\\work\\Scylla\\Scylla\\TreeImportExport.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{710434C9-FC4B-4F1D-B318-E10ADC78499F}|Scylla\\Scylla.vcxproj|solutionrelative:Scylla\\TreeImportExport.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{710434C9-FC4B-4F1D-B318-E10ADC78499F}|Scylla\\Scylla.vcxproj|A:\\work\\Scylla\\Scylla\\ImportsHandling.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{710434C9-FC4B-4F1D-B318-E10ADC78499F}|Scylla\\Scylla.vcxproj|solutionrelative:Scylla\\ImportsHandling.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{15051CE1-AB10-4239-973D-01B84F2AD0A9}|distorm\\make\\win32\\cdistorm.vcxproj|A:\\work\\Scylla\\distorm\\src\\decoder.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
@@ -33,10 +73,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{710434C9-FC4B-4F1D-B318-E10ADC78499F}|Scylla\\Scylla.vcxproj|A:\\work\\Scylla\\Scylla\\ImportRebuilder.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{710434C9-FC4B-4F1D-B318-E10ADC78499F}|Scylla\\Scylla.vcxproj|solutionrelative:Scylla\\ImportRebuilder.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{710434C9-FC4B-4F1D-B318-E10ADC78499F}|Scylla\\Scylla.vcxproj|A:\\work\\Scylla\\Scylla\\DisassemblerGui.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{710434C9-FC4B-4F1D-B318-E10ADC78499F}|Scylla\\Scylla.vcxproj|solutionrelative:Scylla\\DisassemblerGui.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{710434C9-FC4B-4F1D-B318-E10ADC78499F}|Scylla\\Scylla.vcxproj|A:\\work\\Scylla\\Scylla\\ApiReader.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
@@ -74,37 +110,141 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ProcessAccessHelp.h",
+              "DocumentMoniker": "A:\\work\\Scylla\\Scylla\\ProcessAccessHelp.h",
+              "RelativeDocumentMoniker": "Scylla\\ProcessAccessHelp.h",
+              "ToolTip": "A:\\work\\Scylla\\Scylla\\ProcessAccessHelp.h*",
+              "RelativeToolTip": "Scylla\\ProcessAccessHelp.h*",
+              "ViewState": "AQIAANIAAAAAAAAAAAAAAAIAAAAUAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-05-09T01:53:58.075Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "ProcessLister.h",
+              "DocumentMoniker": "A:\\work\\Scylla\\Scylla\\ProcessLister.h",
+              "RelativeDocumentMoniker": "Scylla\\ProcessLister.h",
+              "ToolTip": "A:\\work\\Scylla\\Scylla\\ProcessLister.h*",
+              "RelativeToolTip": "Scylla\\ProcessLister.h*",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABQAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-05-09T01:53:34.331Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "DumpMemoryGui.cpp",
+              "DocumentMoniker": "A:\\work\\Scylla\\Scylla\\DumpMemoryGui.cpp",
+              "RelativeDocumentMoniker": "Scylla\\DumpMemoryGui.cpp",
+              "ToolTip": "A:\\work\\Scylla\\Scylla\\DumpMemoryGui.cpp",
+              "RelativeToolTip": "Scylla\\DumpMemoryGui.cpp",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAMAAAAeAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-05-09T01:53:31.918Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "DllInjection.cpp",
+              "DocumentMoniker": "A:\\work\\Scylla\\Scylla\\DllInjection.cpp",
+              "RelativeDocumentMoniker": "Scylla\\DllInjection.cpp",
+              "ToolTip": "A:\\work\\Scylla\\Scylla\\DllInjection.cpp",
+              "RelativeToolTip": "Scylla\\DllInjection.cpp",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAIAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-05-09T01:53:26.778Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "ProcessLister.cpp",
+              "DocumentMoniker": "A:\\work\\Scylla\\Scylla\\ProcessLister.cpp",
+              "RelativeDocumentMoniker": "Scylla\\ProcessLister.cpp",
+              "ToolTip": "A:\\work\\Scylla\\Scylla\\ProcessLister.cpp",
+              "RelativeToolTip": "Scylla\\ProcessLister.cpp",
+              "ViewState": "AQIAAF8AAAAAAAAAAAAhwOgAAAAmAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-05-09T01:49:49.005Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "SystemInformation.cpp",
+              "DocumentMoniker": "A:\\work\\Scylla\\Scylla\\SystemInformation.cpp",
+              "RelativeDocumentMoniker": "Scylla\\SystemInformation.cpp",
+              "ToolTip": "A:\\work\\Scylla\\Scylla\\SystemInformation.cpp",
+              "RelativeToolTip": "Scylla\\SystemInformation.cpp",
+              "ViewState": "AQIAADwAAAAAAAAAAAAAAEUAAAACAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-05-09T01:44:05.907Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "NativeWinApi.cpp",
+              "DocumentMoniker": "A:\\work\\Scylla\\Scylla\\NativeWinApi.cpp",
+              "RelativeDocumentMoniker": "Scylla\\NativeWinApi.cpp",
+              "ToolTip": "A:\\work\\Scylla\\Scylla\\NativeWinApi.cpp",
+              "RelativeToolTip": "Scylla\\NativeWinApi.cpp",
+              "ViewState": "AQIAADMAAAAAAAAAAAAAACAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-05-08T23:01:13.331Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "ProcessAccessHelp.cpp",
+              "DocumentMoniker": "A:\\work\\Scylla\\Scylla\\ProcessAccessHelp.cpp",
+              "RelativeDocumentMoniker": "Scylla\\ProcessAccessHelp.cpp",
+              "ToolTip": "A:\\work\\Scylla\\Scylla\\ProcessAccessHelp.cpp",
+              "RelativeToolTip": "Scylla\\ProcessAccessHelp.cpp",
+              "ViewState": "AQIAAD8AAAAAAAAAAAAAAEoAAAAkAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-05-08T23:00:32.36Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
               "Title": "main.cpp",
               "DocumentMoniker": "A:\\work\\Scylla\\Scylla\\main.cpp",
               "RelativeDocumentMoniker": "Scylla\\main.cpp",
               "ToolTip": "A:\\work\\Scylla\\Scylla\\main.cpp",
               "RelativeToolTip": "Scylla\\main.cpp",
-              "ViewState": "AQIAAG8AAAAAAAAAAAAAAIIAAAAYAAAA",
+              "ViewState": "AQIAAJIAAAAAAAAAAAAAAIQAAAACAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2024-05-08T22:49:30.464Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 8,
               "Title": "ImportsHandling.cpp",
               "DocumentMoniker": "A:\\work\\Scylla\\Scylla\\ImportsHandling.cpp",
               "RelativeDocumentMoniker": "Scylla\\ImportsHandling.cpp",
               "ToolTip": "A:\\work\\Scylla\\Scylla\\ImportsHandling.cpp",
               "RelativeToolTip": "Scylla\\ImportsHandling.cpp",
-              "ViewState": "AQIAAA0AAAAAAAAAAAAhwF4AAAAXAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAL4BAAAaAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2024-05-08T22:48:24.842Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 14,
               "Title": "decoder.c",
               "DocumentMoniker": "A:\\work\\Scylla\\distorm\\src\\decoder.c",
               "RelativeDocumentMoniker": "distorm\\src\\decoder.c",
@@ -117,19 +257,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 15,
               "Title": "ImportsHandling.h",
               "DocumentMoniker": "A:\\work\\Scylla\\Scylla\\ImportsHandling.h",
               "RelativeDocumentMoniker": "Scylla\\ImportsHandling.h",
               "ToolTip": "A:\\work\\Scylla\\Scylla\\ImportsHandling.h",
               "RelativeToolTip": "Scylla\\ImportsHandling.h",
-              "ViewState": "AQIAAFoAAAAAAAAAAAAAAHEAAAAAAAAA",
+              "ViewState": "AQIAAFcAAAAAAAAAAIBJwHEAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-05-08T22:28:58.198Z"
+              "WhenOpened": "2024-05-08T22:28:58.198Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 12,
               "Title": "TreeImportExport.cpp",
               "DocumentMoniker": "A:\\work\\Scylla\\Scylla\\TreeImportExport.cpp",
               "RelativeDocumentMoniker": "Scylla\\TreeImportExport.cpp",
@@ -142,7 +283,33 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 4,
+              "Title": "DisassemblerGui.cpp",
+              "DocumentMoniker": "A:\\work\\Scylla\\Scylla\\DisassemblerGui.cpp",
+              "RelativeDocumentMoniker": "Scylla\\DisassemblerGui.cpp",
+              "ToolTip": "A:\\work\\Scylla\\Scylla\\DisassemblerGui.cpp",
+              "RelativeToolTip": "Scylla\\DisassemblerGui.cpp",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAQAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-05-08T22:26:30.723Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "SystemInformation.h",
+              "DocumentMoniker": "A:\\work\\Scylla\\Scylla\\SystemInformation.h",
+              "RelativeDocumentMoniker": "Scylla\\SystemInformation.h",
+              "ToolTip": "A:\\work\\Scylla\\Scylla\\SystemInformation.h",
+              "RelativeToolTip": "Scylla\\SystemInformation.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAAKAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-05-09T01:44:34.383Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
               "Title": "TreeImportExport.h",
               "DocumentMoniker": "A:\\work\\Scylla\\Scylla\\TreeImportExport.h",
               "RelativeDocumentMoniker": "Scylla\\TreeImportExport.h",
@@ -155,7 +322,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 16,
               "Title": "ImportRebuilder.h",
               "DocumentMoniker": "A:\\work\\Scylla\\Scylla\\ImportRebuilder.h",
               "RelativeDocumentMoniker": "Scylla\\ImportRebuilder.h",
@@ -163,11 +330,12 @@
               "RelativeToolTip": "Scylla\\ImportRebuilder.h",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-05-08T22:26:52.057Z"
+              "WhenOpened": "2024-05-08T22:26:52.057Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 17,
               "Title": "ImportRebuilder.cpp",
               "DocumentMoniker": "A:\\work\\Scylla\\Scylla\\ImportRebuilder.cpp",
               "RelativeDocumentMoniker": "Scylla\\ImportRebuilder.cpp",
@@ -175,47 +343,38 @@
               "RelativeToolTip": "Scylla\\ImportRebuilder.cpp",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAEAAAAZAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2024-05-08T22:26:50.576Z"
+              "WhenOpened": "2024-05-08T22:26:50.576Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "DisassemblerGui.cpp",
-              "DocumentMoniker": "A:\\work\\Scylla\\Scylla\\DisassemblerGui.cpp",
-              "RelativeDocumentMoniker": "Scylla\\DisassemblerGui.cpp",
-              "ToolTip": "A:\\work\\Scylla\\Scylla\\DisassemblerGui.cpp",
-              "RelativeToolTip": "Scylla\\DisassemblerGui.cpp",
-              "ViewState": "AQIAALUAAAAAAAAAAAAhwMkAAAAZAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2024-05-08T22:26:30.723Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 20,
               "Title": "ConfigurationHolder.cpp",
               "DocumentMoniker": "A:\\work\\Scylla\\Scylla\\ConfigurationHolder.cpp",
               "RelativeDocumentMoniker": "Scylla\\ConfigurationHolder.cpp",
               "ToolTip": "A:\\work\\Scylla\\Scylla\\ConfigurationHolder.cpp",
               "RelativeToolTip": "Scylla\\ConfigurationHolder.cpp",
-              "ViewState": "AQIAAK4AAAAAAAAAAAAAAAAAAAAAAAAA",
+              "ViewState": "AQIAAKsAAAAAAAAAAIBJwAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2024-05-08T22:22:27.54Z"
+              "WhenOpened": "2024-05-08T22:22:27.54Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 21,
               "Title": "Configuration.cpp",
               "DocumentMoniker": "A:\\work\\Scylla\\Scylla\\Configuration.cpp",
               "RelativeDocumentMoniker": "Scylla\\Configuration.cpp",
               "ToolTip": "A:\\work\\Scylla\\Scylla\\Configuration.cpp",
               "RelativeToolTip": "Scylla\\Configuration.cpp",
-              "ViewState": "AQIAABIAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "ViewState": "AQIAAA8AAAAAAAAAAIBJwAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2024-05-08T22:22:25.232Z"
+              "WhenOpened": "2024-05-08T22:22:25.232Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 22,
               "Title": "Architecture.cpp",
               "DocumentMoniker": "A:\\work\\Scylla\\Scylla\\Architecture.cpp",
               "RelativeDocumentMoniker": "Scylla\\Architecture.cpp",
@@ -223,35 +382,38 @@
               "RelativeToolTip": "Scylla\\Architecture.cpp",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2024-05-08T22:22:23.954Z"
+              "WhenOpened": "2024-05-08T22:22:23.954Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 19,
               "Title": "ApiReader.h",
               "DocumentMoniker": "A:\\work\\Scylla\\Scylla\\ApiReader.h",
               "RelativeDocumentMoniker": "Scylla\\ApiReader.h",
               "ToolTip": "A:\\work\\Scylla\\Scylla\\ApiReader.h",
               "RelativeToolTip": "Scylla\\ApiReader.h",
-              "ViewState": "AQIAAAMAAAAAAAAAAAAAAAkAAAAAAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAIBJwAkAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-05-08T22:21:39.8Z"
+              "WhenOpened": "2024-05-08T22:21:39.8Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 18,
               "Title": "ApiReader.cpp",
               "DocumentMoniker": "A:\\work\\Scylla\\Scylla\\ApiReader.cpp",
               "RelativeDocumentMoniker": "Scylla\\ApiReader.cpp",
               "ToolTip": "A:\\work\\Scylla\\Scylla\\ApiReader.cpp",
               "RelativeToolTip": "Scylla\\ApiReader.cpp",
-              "ViewState": "AQIAAEUEAAAAAAAAAAAAAFEEAAACAAAA",
+              "ViewState": "AQIAAEIEAAAAAAAAAIBJwFEEAAACAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2024-05-08T22:21:37.399Z"
+              "WhenOpened": "2024-05-08T22:21:37.399Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 23,
               "Title": "AboutGui.h",
               "DocumentMoniker": "A:\\work\\Scylla\\Scylla\\AboutGui.h",
               "RelativeDocumentMoniker": "Scylla\\AboutGui.h",
@@ -259,11 +421,12 @@
               "RelativeToolTip": "Scylla\\AboutGui.h",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAABQAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-05-08T21:32:23.78Z"
+              "WhenOpened": "2024-05-08T21:32:23.78Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 24,
               "Title": "DumpSectionGui.h",
               "DocumentMoniker": "A:\\work\\Scylla\\Scylla\\DumpSectionGui.h",
               "RelativeDocumentMoniker": "Scylla\\DumpSectionGui.h",
@@ -271,7 +434,8 @@
               "RelativeToolTip": "Scylla\\DumpSectionGui.h",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAQAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-05-08T21:29:44.127Z"
+              "WhenOpened": "2024-05-08T21:29:44.127Z",
+              "EditorCaption": ""
             }
           ]
         }

@@ -20,7 +20,7 @@ def_NtOpenSymbolicLinkObject NativeWinApi::NtOpenSymbolicLinkObject = 0;
 def_NtQuerySymbolicLinkObject NativeWinApi::NtQuerySymbolicLinkObject = 0;
 
 def_RtlNtStatusToDosError NativeWinApi::RtlNtStatusToDosError = 0;
-def_NtClose NativeWinApi::NtClose = 0;
+def_NtClose NativeWinApi::NtClose = 0; 
 
 void NativeWinApi::initialize()
 {

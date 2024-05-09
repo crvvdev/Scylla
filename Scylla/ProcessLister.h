@@ -1,9 +1,7 @@
 #pragma once
 
 #include <windows.h>
-#include <tlhelp32.h>
 #include <vector>
-#include <psapi.h>
 
 #include "NativeWinApi.h"
 #include "DeviceNameResolver.h"

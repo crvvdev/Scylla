@@ -1,11 +1,8 @@
 #include "DllInjection.h"
-#include <Psapi.h>
 #include "Scylla.h"
 
 #include "NativeWinApi.h"
 #include "ProcessAccessHelp.h"
-
-#pragma comment(lib, "Psapi.lib")
 
 //#define DEBUG_COMMENTS
 
